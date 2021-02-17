@@ -1,0 +1,30 @@
+<%- include("partials/header"); -%>
+<script>
+    $(document).on('click','a',function(e) {
+        e.preventDefault();
+        $.ajax(this.href, {
+            success: function(data) {
+                let parsedData = $($.parseHTML(data));
+                $('#main').html(parsedData);
+            },
+            error: function() {
+                console.log("ERROR");
+            }
+        });
+    });
+</script>
+<div class='leftSide'>
+    <h1 class="physicianName"> Physicans </h1>
+    <% for (var key in physicians) { %> 
+        <% s = key.split(' '); %>
+        <% s.shift(); %>
+        <% k = s.reverse().join(', ') %>
+        <li> <a class = "physician" href="/physician/<%=key%>"> <%= k %>  </a> </li>
+    <% } %>
+    <button class='btn btn-primary' type='logout' name="button"> Logout </button>
+</div>
+<div class ='rightSide'>
+    <div id='main'></div>
+</div>
+<div class="clearfix"></div>
+<%- include("partials/footer"); -%>
